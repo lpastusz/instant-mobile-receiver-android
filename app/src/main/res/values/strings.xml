@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Instant-mobile-receiver-android</string>
+
+
+    <!-- URLs -->
+    <string name="URL_login">http://instantmobilereceiverapi.kc9vavbsgu.us-west-2.elasticbeanstalk.com/api/user/login</string>
+
+
+    <!-- Authorization -->
+    <string name="AUTH_basic_token">"Basic d2ViX2NsaWVudDp4eHg="</string>
 </resources>

@@ -4,84 +4,34 @@ package lukaspastuszek.instant_mobile_receiver_android.resources;
 import android.content.Context;
 import android.util.Log;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import lukaspastuszek.instant_mobile_receiver_android.R;
+import lukaspastuszek.instant_mobile_receiver_android.interfaces.AuthorizationResourceCallbackInterface;
 import lukaspastuszek.instant_mobile_receiver_android.interfaces.LoginCallbackInterface;
+import lukaspastuszek.instant_mobile_receiver_android.interfaces.LogoutCallbackInterface;
+import lukaspastuszek.instant_mobile_receiver_android.resources.AuthorizationTasks.LoginTask;
+import lukaspastuszek.instant_mobile_receiver_android.resources.AuthorizationTasks.LogoutTask;
 
 
 /**
  * Created by lpastusz on 21-Oct-16.
  */
 
-public class AuthorizationResource {
+public class AuthorizationResource implements AuthorizationResourceCallbackInterface {
 
     Context context;
 
-    LoginCallbackInterface callbackInterface;
+    LoginCallbackInterface loginCallbackInterface;
+    LogoutCallbackInterface logoutCallbackInterface;
 
     public AuthorizationResource(Context mContext) {
         context = mContext;
     }
 
-    public class AuthThread implements Runnable {
-
-        String username, password;
-
-        public AuthThread(String mUername, String mPassword) {
-            username = mUername;
-            password = mPassword;
-        }
-
-        public void run() {
-            StringBuffer chaine = new StringBuffer("");
-            try{
-                URL url = new URL(context.getResources().getString(R.string.URL_login));
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-                connection.setRequestProperty("User-Agent", "");
-                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                connection.setRequestProperty("Authorization", context.getResources().getString(R.string.AUTH_basic_token));
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.connect();
-
-                JSONObject cred = new JSONObject();
-                cred.put("username", username);
-                cred.put("password", password);
-                cred.put("grant_type", "password");
-
-                OutputStream os = connection.getOutputStream();
-                os.write(cred.toString().getBytes("UTF-8"));
-                os.close();
-
-
-                InputStream inputStream = connection.getInputStream();
-
-                BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
-                String line = "";
-                while ((line = rd.readLine()) != null) {
-                    chaine.append(line);
-                }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            onAuthRequestDone(chaine.toString());
-        }
-    }
-
-
-    private void onAuthRequestDone(String resp) {
+    @Override
+    public void onLoginRequestSuccess(String resp) {
 
         String authToken = "";
         try {
@@ -94,16 +44,31 @@ public class AuthorizationResource {
             e.printStackTrace();
         }
 
-        callbackInterface.onLoginRequestCompleted(authToken);
+        loginCallbackInterface.onLoginRequestSuccess(authToken);
     }
 
+    @Override
+    public void onLogoutRequestSuccess(String resp) {
 
-    public void authenticateLogin(LoginCallbackInterface callbackInterface, String username, String password) {
+        // no need to do anything
 
-        this.callbackInterface = callbackInterface;
-        Runnable r = new AuthThread(username, password);
+    }
+
+    public void sendLoginRequest(LoginCallbackInterface loginCallbackInterface, String username, String password) {
+
+        this.loginCallbackInterface = loginCallbackInterface;
+
+        Runnable r = new LoginTask(context, this, username, password);
         new Thread(r).start();
 
     }
+
+    public void sendLogoutRequest(LogoutCallbackInterface logoutCallbackInterface, String bearerToken) {
+
+        this.logoutCallbackInterface = logoutCallbackInterface;
+        Runnable r = new LogoutTask(context, this, bearerToken);
+        new Thread(r).start();
+
+    };
 
 }

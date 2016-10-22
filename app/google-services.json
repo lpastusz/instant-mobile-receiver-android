@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "872486543378",
+    "firebase_url": "https://instant-mobile-receiver.firebaseio.com",
+    "project_id": "instant-mobile-receiver",
+    "storage_bucket": "instant-mobile-receiver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872486543378:android:87b5be58529f378b",
+        "android_client_info": {
+          "package_name": "lukaspastuszek.instant_mobile_receiver_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872486543378-pn3kurvo5guf28btn5jg5uiq5pa1fg8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6oHYy6w0K6MpE3aZHW4MCIPU4uaqfHfg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

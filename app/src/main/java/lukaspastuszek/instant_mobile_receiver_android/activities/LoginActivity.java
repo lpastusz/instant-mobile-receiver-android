@@ -43,13 +43,13 @@ public class LoginActivity extends AppCompatActivity implements LoginCallbackInt
                 String password = passwordEditText.getText().toString();
 
                 AuthorizationResource authResource = new AuthorizationResource(getApplicationContext());
-                authResource.authenticateLogin(loginCallbackInterface, email, password);
+                authResource.sendLoginRequest(loginCallbackInterface, email, password);
             }
         });
     }
 
     @Override
-    public void onLoginRequestCompleted(String token) {
+    public void onLoginRequestSuccess(String token) {
 
         saveTokenToLocalStorage(token);
 

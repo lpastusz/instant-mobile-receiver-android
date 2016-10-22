@@ -18,6 +18,7 @@ public class LocalStorageResource {
     private final String RESOURCE_FILE_NAME = "auth_resource_file";
 
     private final String KEY_AUTH_TOKEN = "authorization_token_bearer";
+    private final String KEY_FIREBASE_TOKEN = "firebase_token";
 
     public void putBearerToken(String token) {
 
@@ -28,10 +29,26 @@ public class LocalStorageResource {
 
     }
 
+    public void putFirebaseToken(String token) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(RESOURCE_FILE_NAME, 0);
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putString(KEY_FIREBASE_TOKEN, token);
+        sharedPreferencesEditor.commit();
+
+    }
+
     public String getBearerToken() {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(RESOURCE_FILE_NAME, 0);
         return sharedPreferences.getString(KEY_AUTH_TOKEN, null);
+
+    }
+
+    public String getFirebaseToken() {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(RESOURCE_FILE_NAME, 0);
+        return sharedPreferences.getString(KEY_FIREBASE_TOKEN, null);
 
     }
 
@@ -47,6 +64,7 @@ public class LocalStorageResource {
         SharedPreferences sharedPreferences = context.getSharedPreferences(RESOURCE_FILE_NAME, 0);
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         sharedPreferencesEditor.remove(KEY_AUTH_TOKEN);
+        sharedPreferencesEditor.commit();
 
     }
 

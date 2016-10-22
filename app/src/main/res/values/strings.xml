@@ -4,6 +4,7 @@
 
     <!-- URLs -->
     <string name="URL_login">http://instantmobilereceiverapi.kc9vavbsgu.us-west-2.elasticbeanstalk.com/api/user/login</string>
+    <string name="URL_logout">http://instantmobilereceiverapi.kc9vavbsgu.us-west-2.elasticbeanstalk.com/api/user/logout</string>
 
 
     <!-- Authorization -->

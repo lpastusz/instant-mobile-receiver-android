@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallbackInt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Intent ii = getIntent();
 
         // find out if the user is logged in
         LocalStorageResource localStorageResource = new LocalStorageResource(this);

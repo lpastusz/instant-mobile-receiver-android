@@ -25,6 +25,8 @@ public class HomepageActivity extends AppCompatActivity implements LogoutCallbac
 
     HomepageActivity thisActivity;
 
+    BroadcastReceiver updateUIReciver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         thisActivity = this;
@@ -96,7 +98,7 @@ public class HomepageActivity extends AppCompatActivity implements LogoutCallbac
 
         filter.addAction("lukaspastuszek.instant_mobile_receiver_android.update_homepage");
 
-        BroadcastReceiver updateUIReciver = new BroadcastReceiver() {
+        updateUIReciver = new BroadcastReceiver() {
 
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -106,5 +108,11 @@ public class HomepageActivity extends AppCompatActivity implements LogoutCallbac
             }
         };
         registerReceiver(updateUIReciver,filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(updateUIReciver);
+        super.onDestroy();
     }
 }
